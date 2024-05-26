@@ -45,20 +45,21 @@ struct Setting: Hashable {
 }
 
 private func editIcon(imageName: String) -> UIImage {
-    let icon = UIImage(systemName: imageName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 45, weight: .medium, scale: .medium))?.withTintColor(.white, renderingMode: .automatic)
+    let icon = UIImage(systemName: imageName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 35, weight: .light, scale: .unspecified))?.withTintColor(.white, renderingMode: .alwaysOriginal)
     return icon ?? UIImage()
 }
 
 private func setBGColor(color: UIColor) -> UIImageView{
     let imageView = UIImageView()
     imageView.backgroundColor = color
+    imageView.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
     return imageView
 }
 
 extension Setting {
     static var settings: [[Setting]] = [
 
-        [Setting(cellType: .customType, name: .airPlaneMode, icon: editIcon(imageName: "plane"), imageView: setBGColor(color: .systemOrange)),
+        [Setting(cellType: .customType, name: .airPlaneMode, icon: editIcon(imageName: "airplane"), imageView: setBGColor(color: .systemOrange)),
          Setting(cellType: .value1Type, name: .wiFi, icon: editIcon(imageName: "wifi"), imageView: setBGColor(color: .systemBlue), rightLabelText: "VM349678"),
          Setting(cellType: .value1Type, name: .blueTooth, icon: UIImage(named: "icons8-bluetooth-30") ?? UIImage(), imageView: setBGColor(color: .clear), rightLabelText: "On"),
          Setting(cellType: .defaultType, name: .mobileData, icon: editIcon(imageName: "antenna.radiowaves.left.and.right"), imageView: setBGColor(color: .systemGreen)),
@@ -69,8 +70,8 @@ extension Setting {
          Setting(cellType: .defaultType, name: .focus, icon: editIcon(imageName: "moon.fill"), imageView: setBGColor(color: .systemPurple)),
          Setting(cellType: .defaultType, name: .screenTime, icon: editIcon(imageName: "hourglass"), imageView: setBGColor(color: .systemPurple))],
 
-        [Setting(cellType: .defaultType, name: .general, icon: editIcon(imageName: "gear"), imageView: setBGColor(color: .systemGray5)),
-         Setting(cellType: .defaultType, name: .controlCentre, icon: editIcon(imageName: "switch.2"), imageView: setBGColor(color: .systemGray5)),
+        [Setting(cellType: .defaultType, name: .general, icon: editIcon(imageName: "gear"), imageView: setBGColor(color: .systemGray)),
+         Setting(cellType: .defaultType, name: .controlCentre, icon: editIcon(imageName: "switch.2"), imageView: setBGColor(color: .systemGray)),
          Setting(cellType: .defaultType, name: .displayAndBrightness, icon: editIcon(imageName: "textformat.size"), imageView: setBGColor(color: .systemBlue)),
          Setting(cellType: .defaultType, name: .homeScreen, icon: UIImage(named: "Icona_Launchpad") ?? UIImage(), imageView: setBGColor(color: .clear)),
          Setting(cellType: .defaultType, name: .accessibility, icon: editIcon(imageName: "accessibility"), imageView: setBGColor(color: .systemBlue)),
@@ -82,34 +83,7 @@ extension Setting {
          Setting(cellType: .defaultType, name: .privacyAndSecurity, icon: editIcon(imageName: "hand.raised.fill"), imageView: setBGColor(color: .systemBlue))]
     ]
 }
-// airplane.circle.fill   airplane
-// wifi.square.fill  V
-//
-// antenna.radiowaves.left.and.right
-// personalhotspot
 
-// bell.badge.fill
-// speaker.wave.3.fill
-// moon.fill
-// hourglass
-
-// gear
-// switch.2
-// textformat.size
-//
-// accessibility
-//
-//
-// faceid
-// sos
-// circle.hexagongrid.fill
-// battery.100percent
-// hand.raised.square.fill
-
-
-
-// 1.circle.fill
-//#007AFF
 
 
 

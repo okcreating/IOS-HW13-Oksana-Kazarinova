@@ -13,7 +13,7 @@ class Value1TableViewCell: UITableViewCell {
     var setting: Setting? {
         didSet {
             settingName.text = setting?.name.rawValue
-            settingIcon = setting?.imageView ?? UIImageView()
+            settingIcon.backgroundColor = setting?.imageView.backgroundColor
             settingIcon.image = setting?.icon
             labelOnTheRight.text = setting?.rightLabelText
         }
@@ -23,22 +23,22 @@ class Value1TableViewCell: UITableViewCell {
 
      private var settingName: UILabel = {
          let name = UILabel()
-         name.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+         name.font = UIFont.systemFont(ofSize: 18, weight: .regular)
          name.translatesAutoresizingMaskIntoConstraints = false
          return name
      }()
 
      private var icon: UIImage = {
          let image = UIImage()
-         //image.translatesAutoresizingMaskIntoConstraints = false
          return image
      }()
 
      private var settingIcon: UIImageView = {
          let iconBG = UIImageView()
-         iconBG.contentMode = .scaleToFill
+         iconBG.contentMode = .scaleAspectFit
          iconBG.clipsToBounds = true
-         iconBG.layer.cornerRadius = 10
+         iconBG.layer.masksToBounds = true
+         iconBG.layer.cornerRadius = 5
          iconBG.translatesAutoresizingMaskIntoConstraints = false
          return iconBG
      }()
@@ -67,11 +67,24 @@ class Value1TableViewCell: UITableViewCell {
         addSubview(settingName)
         addSubview(settingIcon)
         addSubview(labelOnTheRight)
-        settingIcon.addSubview(icon)
     }
 
     private func setupLayout() {
+        NSLayoutConstraint.activate([
+            settingIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            settingIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 6),
+            settingIcon.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -6),
+            settingIcon.widthAnchor.constraint(equalToConstant: 35),
+            settingIcon.heightAnchor.constraint(equalToConstant: 35),
 
+            settingName.leadingAnchor.constraint(equalTo: settingIcon.trailingAnchor, constant: 20),
+            settingName.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            settingName.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+
+            labelOnTheRight.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            labelOnTheRight.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            labelOnTheRight.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+        ])
     }
 
     // MARK: - Reuse
