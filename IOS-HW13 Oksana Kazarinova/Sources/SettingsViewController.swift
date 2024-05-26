@@ -14,8 +14,7 @@ class SettingsViewController: UIViewController {
     // MARK: - Outlets
 
     private lazy var tableViewBuilding: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.backgroundColor = .systemGray5
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.register(DefaultTableViewCell.self, forCellReuseIdentifier: DefaultTableViewCell.identifier)
         tableView.register(Value1TableViewCell.self, forCellReuseIdentifier: Value1TableViewCell.identifier)
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
@@ -30,7 +29,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settings = Setting.settings
-        view.backgroundColor = .white
+        view.backgroundColor = .systemGray6
         title = "Settings"
         navigationController?.navigationBar.prefersLargeTitles = true
         setupHierarchy()
@@ -45,10 +44,10 @@ class SettingsViewController: UIViewController {
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            tableViewBuilding.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableViewBuilding.topAnchor.constraint(equalTo: view.topAnchor),
             tableViewBuilding.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableViewBuilding.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableViewBuilding.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableViewBuilding.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
@@ -58,7 +57,7 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
+       50
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,17 +75,16 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         case .mobileData, .notifications, .soundAndHaptics, .focus, .screenTime, .general, .controlCentre, .displayAndBrightness, .homeScreen, .accessibility, .siriAndSearch, .faceIDAndPasscode, .emergencySOS, .explosureNotification, .battery, .privacyAndSecurity:
             let cell = tableViewBuilding.dequeueReusableCell(withIdentifier: DefaultTableViewCell.identifier, for: indexPath) as? DefaultTableViewCell
             cell?.setting = settings?[indexPath.section][indexPath.row]
-            cell?.accessoryType = .detailDisclosureButton
+            cell?.accessoryType = .disclosureIndicator
             return cell ?? UITableViewCell()
         case .wiFi, .blueTooth, .personalHotspot:
             let cell = tableViewBuilding.dequeueReusableCell(withIdentifier: Value1TableViewCell.identifier) as? Value1TableViewCell
             cell?.setting = settings?[indexPath.section][indexPath.row]
-            cell?.accessoryType = .detailDisclosureButton
+            cell?.accessoryType = .disclosureIndicator
             return cell ?? UITableViewCell()
         case .airPlaneMode:
             let cell = tableViewBuilding.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as? CustomTableViewCell
             cell?.setting = settings?[indexPath.section][indexPath.row]
-            cell?.accessoryType = .detailDisclosureButton
             return cell ?? UITableViewCell()
         }
     }
@@ -94,8 +92,8 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController = DetailView()
         tableView.deselectRow(at: indexPath, animated: true)
-        viewController.detail = settings?[indexPath.section][indexPath.row]
-        print("You pressed \(settings?[indexPath.section][indexPath.row].name.rawValue ?? "unknown cell")")
+        viewController.setting = settings?[indexPath.section][indexPath.row]
+        print("You pressed  \(settings?[indexPath.section][indexPath.row].name.rawValue ?? "unknown cell")")
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

@@ -9,29 +9,30 @@ import UIKit
 
 class DetailView: UIViewController {
 
-    var onTapped: (() -> Void)? // передача данных
-
-    var detail: Setting? {
+    var setting: Setting? {
         didSet {
-
+            message.text = "Thank you. You pressed \(setting?.name.rawValue ?? "unknown thing")."
+            view.backgroundColor = setting?.imageView.backgroundColor
         }
     }
 
-    private lazy var message: UILabel = {
+    // MARK: - Outlets
+
+     private var message: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .semibold)
-        label.layer.borderColor = UIColor.white.cgColor
-        label.layer.borderWidth = 2
+        label.textColor = .white
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-       // label.text = "
         return label
     }()
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupHierarchy()
         setupLayout()
-
     }
     
     // MARK: - Setup
@@ -47,6 +48,4 @@ class DetailView: UIViewController {
             message.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             message.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)])
     }
-
-
 }

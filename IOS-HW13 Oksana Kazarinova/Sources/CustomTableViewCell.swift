@@ -14,40 +14,38 @@ class CustomTableViewCell: UITableViewCell {
     var setting: Setting? {
         didSet {
             settingName.text = setting?.name.rawValue
-            settingIcon = setting?.imageView ?? UIImageView()
+            settingIcon.backgroundColor = setting?.imageView.backgroundColor
             settingIcon.image = setting?.icon
         }
     }
-
 
     // MARK: - Outlets
 
      private var settingName: UILabel = {
          let name = UILabel()
-         name.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+         name.font = UIFont.systemFont(ofSize: 18, weight: .regular)
          name.translatesAutoresizingMaskIntoConstraints = false
          return name
      }()
 
      private var icon: UIImage = {
          let image = UIImage()
-         //image.translatesAutoresizingMaskIntoConstraints = false
          return image
      }()
 
      private var settingIcon: UIImageView = {
          let iconBG = UIImageView()
-         iconBG.contentMode = .scaleToFill
+         iconBG.contentMode = .scaleAspectFit
          iconBG.clipsToBounds = true
-         iconBG.layer.cornerRadius = 10
+         iconBG.layer.masksToBounds = true
+         iconBG.layer.cornerRadius = 5
          iconBG.translatesAutoresizingMaskIntoConstraints = false
          return iconBG
      }()
 
     private lazy var switchOnTheRight: UISwitch = {
         let switcher = UISwitch()
-        switcher.isOn = true
-        switcher.setOn(true, animated: true)
+        switcher.setOn(false, animated: true)
         switcher.addTarget(self, action: #selector(switchOnOff), for: .valueChanged)
         switcher.translatesAutoresizingMaskIntoConstraints = false
         return switcher
@@ -69,16 +67,26 @@ class CustomTableViewCell: UITableViewCell {
 
     private func setupHierarchy() {
         addSubview(settingName)
-        addSubview(imageView)
-        imageView?.addSubview(settingIcon)
-
-        //addSubview(imageContainer)
+        addSubview(settingIcon)
         addSubview(switchOnTheRight)
-       // imageContainer.addSubview(settingIcon)
     }
 
     private func setupLayout() {
+        NSLayoutConstraint.activate([
+            settingIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            settingIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 6),
+            settingIcon.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -6),
+            settingIcon.widthAnchor.constraint(equalToConstant: 35),
+            settingIcon.heightAnchor.constraint(equalToConstant: 35),
 
+            settingName.leadingAnchor.constraint(equalTo: settingIcon.trailingAnchor, constant: 20),
+            settingName.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            settingName.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+
+           switchOnTheRight.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            switchOnTheRight.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            switchOnTheRight.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+        ])
     }
 
     // MARK: - Actions
@@ -91,5 +99,4 @@ class CustomTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         self.accessoryType = .none
     }
-
 }
